@@ -12,55 +12,55 @@ using System.Xml;
 
 namespace ClassGrade
 {
-    public partial class Form1 : Form
+    public partial class GameSellSimulator : Form
     {
         private List<Game> listGames = new List<Game>();
-        public Form1()
+        public GameSellSimulator()
         {
             InitializeComponent();
             Read_Product();
         }
 
-        private void button1_Click(object sender, EventArgs e) //기입
+        private void InsertContent_Click(object sender, EventArgs e) //기입
         {
-            if (textBox1.Text != "" || textBox2.Text != "" ||
-               textBox3.Text != "" || textBox4.Text != "" ||
-               textBox5.Text != "")
+            if (GameTitle.Text != "" || GameModel.Text != "" ||
+               GameGenre.Text != "" || GamePrice.Text != "" ||
+               GameStock.Text != "")
             {
                 int output;
                 int output2;
 
-                if (int.TryParse(textBox4.Text, out output)&&int.TryParse(textBox5.Text, out output2))
+                if (int.TryParse(GamePrice.Text, out output)&&int.TryParse(GameStock.Text, out output2))
                 {
                     listGames.Add(new Game()
                     {
 
-                        title = textBox1.Text,
-                        model = textBox2.Text,
-                        genre = textBox3.Text,
+                        title = GameTitle.Text,
+                        model = GameModel.Text,
+                        genre = GameGenre.Text,
                         price = output,
                         stock = output2
                     });
                 }
             }
 
-            dataGridView1.DataSource = null;
-            textBox1.Text = null;
-            textBox2.Text = null;
-            textBox3.Text = null;
-            textBox4.Text = null;
-            textBox5.Text = null;
-            dataGridView1.DataSource = listGames;
+            GameListGrid.DataSource = null;
+            GameTitle.Text = null;
+            GameModel.Text = null;
+            GameGenre.Text = null;
+            GamePrice.Text = null;
+            GameStock.Text = null;
+            GameListGrid.DataSource = listGames;
         }
 
 
 
-        private void button3_Click(object sender, EventArgs e) //XML 생성
+        private void Save_or_Make_XML_Click(object sender, EventArgs e) //XML 생성
         {
             Make_Products();
         }
 
-        private void button4_Click(object sender, EventArgs e) //XML 읽기
+        private void Read_XML_Click(object sender, EventArgs e) //XML 읽기
         {
             Read_Product();
         }
@@ -121,20 +121,21 @@ namespace ClassGrade
             catch (FileLoadException exception)
             {
                 // 파일이 없으면 예외 발생: 새로운 파일 생성
+                MessageBox.Show("XML 파일이 없습니다. 새 파일을 생성합니다.");
                 Make_Products();
             }
 
         }
         private void button2_Click(object sender, EventArgs e) //XML표시
         {
-            dataGridView1.DataSource = null;
-            dataGridView1.DataSource = listGames;
+            GameListGrid.DataSource = null;
+            GameListGrid.DataSource = listGames;
         }
 
         private void BuyButton_Click(object sender, EventArgs e)
         {
 
-            foreach (var item in dataGridView1.Rows)
+            foreach (var item in GameListGrid.Rows)
             {
                 DataGridViewRow dgvRow = item as DataGridViewRow;
                 DataGridViewCell dataGridViewCell = dgvRow.Cells[0];
@@ -178,8 +179,8 @@ namespace ClassGrade
 
             
 
-            dataGridView1.DataSource = null;
-            dataGridView1.DataSource = listGames;
+            GameListGrid.DataSource = null;
+            GameListGrid.DataSource = listGames;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -189,7 +190,7 @@ namespace ClassGrade
 
         private void Delete_Button_Click(object sender, EventArgs e)
         {
-            foreach (var item in dataGridView1.Rows)
+            foreach (var item in GameListGrid.Rows)
             {
                 DataGridViewRow dgvRow = item as DataGridViewRow;
                 DataGridViewCell dataGridViewCell = dgvRow.Cells[0];
@@ -204,8 +205,8 @@ namespace ClassGrade
                 }
             }
 
-            dataGridView1.DataSource = null;
-            dataGridView1.DataSource = listGames;
+            GameListGrid.DataSource = null;
+            GameListGrid.DataSource = listGames;
         }
 
         private void ShowInfoBTN_Click(object sender, EventArgs e)
